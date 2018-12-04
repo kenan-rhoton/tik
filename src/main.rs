@@ -78,6 +78,12 @@ impl Day {
     }
 }
 
+impl Entry {
+    pub fn to_string(&self) -> String {
+        format!("{} -> {}", self.time, self.subject)
+    }
+}
+
 #[test]
 fn test_tik() {
     let mut empty_tik = Tik::from_yaml("".to_string());
@@ -126,9 +132,9 @@ fn main() {
         let entry = Entry{time: time_string, subject: data};
 
         let mut tikdata = Tik::load();
-        tikdata.add_entry(date_string, entry);
+        tikdata.add_entry(date_string, entry.clone());
         match tikdata.save() {
-            Ok(_) => println!("{}", tikdata.to_yaml()),
+            Ok(_) => println!("{}", entry.to_string()),
             Err(e) => println!("{}", e),
         }
 
